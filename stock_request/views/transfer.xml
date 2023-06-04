@@ -1,0 +1,65 @@
+<!--<?xml version="1.0" encoding="utf-8"?>-->
+
+<!--<odoo>-->
+<!--    <data>-->
+
+<!--        <record model="ir.ui.view" id="view_transfer_tree_inventory_editable">-->
+<!--            <field name="name">transfer.tree.editable</field>-->
+<!--            <field name="model">transfer</field>-->
+<!--            <field eval="10" name="priority"/>-->
+<!--            <field name="arch" type="xml">-->
+<!--                <tree editable="bottom" create="1" edit="1" js_class="singleton_list" sample="1">-->
+<!--                    <field name="id" invisible="1"/>-->
+<!--&lt;!&ndash;                    <field name="tracking" invisible="1"/>&ndash;&gt;-->
+<!--                    <field name="product_id" attrs="{'readonly': [('id', '!=', False)]}"-->
+<!--                           readonly="context.get('single_product', False)" force_save="1"-->
+<!--                           options="{'no_create': True}"/>-->
+<!--                    <field name="location_id" attrs="{'readonly': [('id', '!=', False)]}"-->
+<!--                           invisible="context.get('hide_location', False)" options="{'no_create': True}"/>-->
+<!--                    <field name="lot_id" groups="stock.group_production_lot" readonly="1"/>-->
+<!--                    <field name="inventory_quantity_auto_apply" string="On Hand Quantity" readonly="0"/>-->
+<!--                    <field name="available_qty" optional="show"/>-->
+<!--                    <field name="product_uom_id" groups="uom.group_uom"/>-->
+<!--                    <field name="company_id" groups="base.group_multi_company" optional="show"/>-->
+<!--                </tree>-->
+<!--            </field>-->
+<!--        </record>-->
+
+<!--        &lt;!&ndash;        <record id="transfer_view_form" model="ir.ui.view">&ndash;&gt;-->
+<!--        &lt;!&ndash;            <field name="name">transfer_view_form</field>&ndash;&gt;-->
+<!--        &lt;!&ndash;            <field name="model">transfer</field>&ndash;&gt;-->
+<!--        &lt;!&ndash;            <field name="arch" type="xml">&ndash;&gt;-->
+<!--        &lt;!&ndash;                <form string="eeee_form">&ndash;&gt;-->
+<!--        &lt;!&ndash;                    <sheet>&ndash;&gt;-->
+<!--        &lt;!&ndash;                        <field name="transfer_lines">&ndash;&gt;-->
+<!--        &lt;!&ndash;                            <tree editable="bottom">&ndash;&gt;-->
+<!--        &lt;!&ndash;                                <field name="product_id"/>&ndash;&gt;-->
+<!--        &lt;!&ndash;                                <field name="product_qty"/>&ndash;&gt;-->
+<!--        &lt;!&ndash;                                <field name="available_qty"/>&ndash;&gt;-->
+<!--        &lt;!&ndash;                                <field name="product_uom_id"/>&ndash;&gt;-->
+<!--        &lt;!&ndash;                                <field name="source_location"/>&ndash;&gt;-->
+<!--        &lt;!&ndash;                                <button name="do_transfer" type="object" title="Make Transfer" icon="fa-bars" style="font-size: 1rem;" groups="stock_request.group_stock_request_manager"/>&ndash;&gt;-->
+<!--        &lt;!&ndash;                            </tree>&ndash;&gt;-->
+<!--        &lt;!&ndash;                        </field>&ndash;&gt;-->
+<!--        &lt;!&ndash;&lt;!&ndash;                        <footer>&ndash;&gt;&ndash;&gt;-->
+<!--        &lt;!&ndash;&lt;!&ndash;                            <button name="create_transfer" type="object" string="ddddd"/>&ndash;&gt;&ndash;&gt;-->
+<!--        &lt;!&ndash;&lt;!&ndash;                        </footer>&ndash;&gt;&ndash;&gt;-->
+<!--        &lt;!&ndash;                    </sheet>&ndash;&gt;-->
+<!--        &lt;!&ndash;                </form>&ndash;&gt;-->
+<!--        &lt;!&ndash;            </field>&ndash;&gt;-->
+<!--        &lt;!&ndash;        </record>&ndash;&gt;-->
+
+<!--        <record id="transfer_action" model="ir.actions.act_window">-->
+<!--            <field name="name">Transfer</field>-->
+<!--            <field name="res_model">transfer</field>-->
+<!--            <field name="type">ir.actions.act_window</field>-->
+<!--            <field name="view_mode">tree,form</field>-->
+<!--        </record>-->
+
+<!--        <menuitem action="transfer_action"-->
+<!--                  id="transfer_menu"-->
+<!--                  parent="stock.menu_warehouse_report"-->
+<!--                  sequence="50"/>-->
+
+<!--    </data>-->
+<!--</odoo>-->

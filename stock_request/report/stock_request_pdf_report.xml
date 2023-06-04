@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_stock_request_pdf_report">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t t-call="web.internal_layout">
+                    <div class="page">
+                        <div class="oe_structure"/>
+                        <div class="row" style="width: 105%;">
+                            <div class="col-6" style="">
+                                <table class="company-info-box">
+                                    <tr>
+                                        <td class="company-logo">
+                                            <img t-att-src="'data:image/png;base64,%s' % to_text(doc.company_id.logo)"
+                                                 style="max-height: 200px; max-width: 200px;"/>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div class="col-6" style="">
+                                <table class="table-bordered mb64" style="border: 1px solid black;">
+                                    <tr>
+                                        <th>Order Ref</th>
+                                        <td>
+                                            <t t-esc="doc.name"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>Requested Date</th>
+                                        <td>
+                                            <t t-esc="doc.date_quotation"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>Destination Location</th>
+                                        <td>
+                                            <t t-esc="doc.location_dest_id.name"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>Responsible</th>
+                                        <td>
+                                            <t t-esc="doc.user_id.name"/>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="oe_structure"/>
+                        <div class="row" style="width: 100%; margin-top:50px;">
+                            <table class="table-bordered mb64 text-center" style="border: 1px solid black;">
+                                <thead>
+                                    <tr>
+                                        <th>Product Barcode</th>
+                                        <th>Product</th>
+                                        <th>Requested Qty</th>
+                                        <th>Approved Qty</th>
+                                        <th>Qty in Transfer</th>
+                                        <th>Transferred Quantity</th>
+                                        <th>Purchased Quantity</th>
+                                        <th>Available Qty</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr t-foreach="doc.lines" t-as="line">
+                                        <td>
+                                            <t t-esc="line.product_id.barcode"/>
+                                        </td>
+                                        <td>
+                                            <t t-esc="line.product_id.name"/>
+                                        </td>
+                                        <td>
+                                            <t t-esc="line.request_qty"/>
+                                        </td>
+                                        <td>
+                                            <t t-esc="line.qty"/>
+                                        </td>
+                                        <td>
+                                            <t t-esc="line.qty_in_transfer"/>
+                                        </td>
+                                        <td>
+                                            <t t-esc="line.transferred_qty"/>
+                                        </td>
+                                        <td>
+                                            <t t-esc="line.purchased_qty"/>
+                                        </td>
+                                        <td>
+                                            <t t-esc="line.available_qty"/>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="row" style="margin-top:50px;">
+                            <div class="col-12">
+                                <div style="border: 1px solid black; width: 40%; height: 80%; padding: 20px;">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>

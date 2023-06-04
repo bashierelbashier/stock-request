@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="stock_location_transit" model="stock.location">
+            <field name="name">Transit Location</field>
+            <field name="location_id" ref="stock.stock_location_locations_virtual"/>
+            <field name="usage">transit</field>
+            <field name="active" eval="True"/>
+        </record>
+    </data>
+</odoo>

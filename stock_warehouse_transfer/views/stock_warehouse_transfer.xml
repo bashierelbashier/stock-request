@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="view_warehouse" model="ir.ui.view">
+            <field name="name">stock.warehouse</field>
+            <field name="model">stock.warehouse</field>
+            <field name="inherit_id" ref="stock.view_warehouse"/>
+            <field name="arch" type="xml">
+                <field name="partner_id" position="after">
+                    <field name="transfer_user_ids" widget="many2many_tags"/>
+                </field>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="view_picking_type_form">
+            <field name="name">Operation Types</field>
+            <field name="model">stock.picking.type</field>
+            <field name="inherit_id" ref="stock.view_picking_type_form"/>
+            <field name="arch" type="xml">
+                <field name="use_existing_lots" position="after">
+                    <field name="users_ids" widget="many2many_tags"/>
+                </field>
+            </field>
+        </record>
+
+        <record id="stock.stock_picking_type_action" model="ir.actions.act_window">
+            <field name="context">{'check_accesses':True}</field>
+        </record>
+        <record id="stock.action_picking_type_list" model="ir.actions.act_window">
+            <field name="context">{'check_accesses':True}</field>
+        </record>
+        <record id="stock.action_picking_tree_all" model="ir.actions.act_window">
+            <field name="context">{'check_accesses':True}</field>
+        </record>
+
+        <record id="stock_warehouse_transfer_view_tree" model="ir.ui.view">
+            <field name="name">stock.warehouse.transfer.view.tree</field>
+            <field name="model">stock.warehouse.transfer</field>
+            <field name="arch" type="xml">
+                <tree string="Transfers" delete="false">
+                    <field name="name"/>
+                    <field name="date"/>
+                    <field name="source_warehouse"/>
+                    <field name="dest_warehouse"/>
+                    <field name="trans_location"/>
+                    <field name="pickings"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_picking_form" model="ir.ui.view">
+            <field name="name">stock.picking.form</field>
+            <field name="model">stock.picking</field>
+            <field name="inherit_id" ref="stock.view_picking_form"/>
+            <field name="arch" type="xml">
+                <field name="origin" position="after">
+                    <field name="original_location_id" readonly="1"/>
+                </field>
+            </field>
+        </record>
+
+        <record id="stock_warehouse_transfer_view_form" model="ir.ui.view">
+            <field name="name">stock.warehouse.transfer.view.form</field>
+            <field name="model">stock.warehouse.transfer</field>
+            <field name="arch" type="xml">
+                <form string="Transfer" delete="false">
+                    <header>
+                        <!--                        <button name="action_cancel" type="workflow" states="draft,send" class="oe_highlight" string="Cancel"/>-->
+                        <button name="action_create_picking_new" type="object"
+                                attrs="{'invisible':['|',('state','!=','draft'),('transfer_from_check','!=',True)]}"
+                                class="oe_highlight" string="Create Picking"/>
+                        <field name="state" widget="statusbar"/>
+                    </header>
+
+                    <sheet>
+                        <h1>
+                            <field name="name" placeholder="Reference" readonly="1"/>
+                        </h1>
+                        <group>
+                            <field name="transfer_from_check" invisible="1"/>
+                            <field name="date" required="1" attrs="{'readonly':[('state','!=','draft')]}"/>
+                        </group>
+                        <group col="4">
+                            <field name="source_location" required="1" attrs="{'readonly':[('state','!=','draft')]}"/>
+                            <field name="dest_location" required="1" attrs="{'readonly':[('state','!=','draft')]}"/>
+                            <field name="trans_location" required="1" attrs="{'readonly':[('state','!=','draft')]}"/>
+                        </group>
+                        <group col="4">
+                            <field name="source_warehouse" required="1"/>
+                            <field name="dest_warehouse" required="1"/>
+                        </group>
+                        <notebook>
+                            <page string="Products">
+                                <field name="lines" nolabel="1" attrs="{'readonly':[('state','!=','draft')]}"
+                                       options="{'always_reload':true}"
+                                       context="{'source_location': source_location,'dest_location':dest_location}">
+                                    <tree editable="bottom">
+                                        <field name="product_id" domain="[('type','!=','service')]" required="1"/>
+                                        <field name="available_qty" readonly="1" invisible="1" force_save="1"/>
+                                        <field name="product_qty" required="1"/>
+                                        <field name="product_uom_id" required="1"/>
+                                        <field name="source_location" invisible="1"/>
+                                        <field name="dest_location" invisible="1"/>
+                                        <field name="note"/>
+                                    </tree>
+                                </field>
+                            </page>
+                            <page string="Pickings">
+                                <field name="pickings" readonly="1" nolabel="1"
+                                       options="{'always_reload':true}"
+                                       attrs="{'readonly':[('state','!=','draft')]}"/>
+                            </page>
+                        </notebook>
+                    </sheet>
+
+                    <div class="oe_chatter" colspan="4">
+                        <field name="message_follower_ids" widget="mail_followers" groups="base.group_user"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <record id="stock_warehouse_transfer_action" model="ir.actions.act_window">
+            <field name="name">Stock Warehouse Transfer</field>
+            <field name="res_model">stock.warehouse.transfer</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem action="stock_warehouse_transfer_action"
+                  id="stock_warehouse_transfer_menu"
+                  parent="stock.menu_stock_warehouse_mgmt"
+                  sequence="50"/>
+
+    </data>
+</odoo>

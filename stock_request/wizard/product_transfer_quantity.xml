@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<odoo>
+    <data>
+        <!-- product.transfer.quantity form view -->
+        <record id="transfer_quantity_view" model="ir.ui.view">
+            <field name="name">transfer.quant.view</field>
+            <field name="model">transfer</field>
+            <field name="arch" type="xml">
+                <form create="0">
+                    <field name="transfer_lines">
+                        <tree editable="bottom" create="0" edit="1" sample="0" >
+                            <field name="location_id" string="Location" readonly="1" force_save="1"/>
+                            <field name="dest_location" invisible="1" readonly="1" force_save="1"/>
+                            <field name="available_qty" readonly="1" force_save="1"/>
+                            <field name="company_id" groups="base.group_multi_company" optional="show"/>
+                            <field name="lot_id" readonly="1" force_save="1"/>
+                            <field name="quantity" string="Quantity" readonly="1" force_save="1"/>
+                            <field name="transfer_qty" readonly="0"/>
+                            <field name="stock_request_id" invisible="1" readonly="0"/>
+                            <field name="stock_request_line_id" invisible="1" readonly="0"/>
+                            <button name="do_transfer" type="object" string="Make Transfer"
+                                    groups="stock_request.group_stock_request_manager"/>
+                        </tree>
+                    </field>
+                </form>
+            </field>
+        </record>
+
+        <record id="transfer_quantity_view_form" model="ir.actions.act_window">
+            <field name="name">transfer history</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">transfer</field>
+            <field name="view_id" ref="transfer_quantity_view"/>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+
+    </data>
+</odoo>
